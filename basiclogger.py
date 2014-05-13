@@ -29,7 +29,7 @@ class pyLogger:
             loglevel = logging.DEBUG
 
         # Argumentos del logger. Por defecto el nivel debería ser INFO
-        self.log = logging.getLogger(__name__)
+        self.log = logging.Logger(logname)
         self.log.setLevel(loglevel)
 
         handler = logging.FileHandler(logname)
