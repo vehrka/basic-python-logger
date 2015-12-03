@@ -29,13 +29,15 @@ class pyLogger:
             loglevel = logging.DEBUG
 
         # Argumentos del logger. Por defecto el nivel debería ser INFO
-        self.log = logging.Logger(logname)
+        self.log = logging.getLogger(logname)
+        if not len(self.log.handlers):
+            self.log = logging.Logger(logname)
+            handler = logging.FileHandler(logname)
+            handler.setLevel(loglevel)
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            handler.setFormatter(formatter)
+            self.log.addHandler(handler)
+        self.log.propagate = False
         self.log.setLevel(loglevel)
 
-        handler = logging.FileHandler(logname)
-        handler.setLevel(loglevel)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s \
-                                                                - %(message)s')
-        handler.setFormatter(formatter)
-
-        self.log.addHandler(handler)
+        
